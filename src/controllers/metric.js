@@ -15,11 +15,8 @@ const logData = (request, response) => {
       error: "value must be a number in your request body",
     });
 
-  const out = Store.push(key, parseInt(value));
-
-  return response.status(201).send({
-    ...out,
-  });
+  Store.push(key, parseInt(value));
+  return response.status(201).send({});
 };
 
 /**
@@ -37,9 +34,7 @@ const getSum = (request, response) => {
       error: "no logs have been made with this key in the last hour",
     });
 
-  return response.status(201).send({
-    sum: out.sum,
-  });
+  return response.status(201).send(`${out.sum}`);
 };
 
 module.exports = { getSum, logData };
