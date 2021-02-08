@@ -130,17 +130,15 @@ class Store {
       const timeago = 3600000 * this.expiresAfter;
       const dateInTimePast = Date.now() - timeago;
       //Linear lookup for all keys.
-      for (const key in this.bucket) {
-        if (this.bucket.hasOwnProperty(key)) {
-          // Copy of key in bucket to avoid data mismanagement while unshifting
-          // main bucket
-          const copy = this.bucket[key];
-          for (let i = 0; i < copy.length; i++) {
-            if (copy[i].time < dateInTimePast) this.bucket[key].unshift();
-            // break when condition is not met,
-            // since data is by default sorted in time order
-            else break;
-          }
+      for (const key of Object.keys(this.bucket)) {
+        // Copy of key in bucket to avoid data mismanagement while unshifting
+        // main bucket
+        const copy = this.bucket[key];
+        for (let i = 0; i < copy.length; i++) {
+          if (copy[i].time < dateInTimePast) this.bucket[key].unshift();
+          // break when condition is not met,
+          // since data is by default sorted in time order
+          else break;
         }
       }
     };

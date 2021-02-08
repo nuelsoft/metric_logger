@@ -15,7 +15,8 @@ const logData = (request, response) => {
       error: "value must be a number in your request body",
     });
 
-  Store.push(key, parseInt(value));
+  // rounds value up to the nearest integer
+  Store.push(key, parseInt(parseFloat(value).toFixed(0)));
   return response.status(201).send({});
 };
 
