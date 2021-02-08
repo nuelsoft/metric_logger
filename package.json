@@ -1,0 +1,32 @@
+{
+  "name": "metric_logger",
+  "version": "1.0.0",
+  "description": "A practical test assignment for the Backend Software Engineering role at Deep Consulting Solutions",
+  "main": "bin/index.js",
+  "scripts": {
+    "start": "node bin/index",
+    "test": "test",
+    "watch": "nodemon metric_logger"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nuelsoft/metric_logger.git"
+  },
+  "keywords": [
+    "metric",
+    "logger"
+  ],
+  "author": "nuelsoft",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nuelsoft/metric_logger/issues"
+  },
+  "homepage": "https://github.com/nuelsoft/metric_logger#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.11"
+  }
+}
