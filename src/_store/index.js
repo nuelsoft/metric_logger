@@ -20,16 +20,33 @@ class Store {
   static expiresAfter;
 
   /**
+   *
+   * Duration between cleaning intervals
+   * @type number
+   */
+  static cleaningInterval;
+
+  /**
    * Initializes Store.
    * @param {boolean} startCleaner Determines if cleaner would be fired up immediately
    *
    * @param {number} persistenceTimePeriod  Persistence Time Period
+   *
+   * @param {number} persistenceFlushInterval duration in milliseconds used as interval in persistence flush
    */
-  static initialize({ startCleaner, persistenceTimePeriod }) {
+  static initialize({
+    startCleaner,
+    persistenceTimePeriod,
+    persistenceFlushInterval,
+  }) {
     if (this.bucket) throw new Error("STORE: already initialized");
     this.bucket = {};
     this.expiresAfter = persistenceTimePeriod || 1;
-    if (startCleaner) this.cleaner();
+
+    if (startCleaner) {
+      this.cleaningInterval = persistenceFlushInterval || 10000;
+      this.cleaner();
+    }
 
     console.log("STORE: initialized");
   }
@@ -119,11 +136,15 @@ class Store {
    */
   static cleaner() {
     this.ensureInitialized();
-    //10 seconds
-    const cleaningInterval = 10000;
+
+    console.log(
+      "STORE: Bucket cleaner started, cleaning every",
+      this.cleaningInterval,
+      "ms"
+    );
 
     const clean = () => {
-      timeOut = setTimeout(clean, cleaningInterval);
+      timeOut = setTimeout(clean, this.cleaningInterval);
 
       console.log("STORE: cleaning bucket");
 
@@ -143,7 +164,7 @@ class Store {
       }
     };
 
-    let timeOut = setTimeout(clean, cleaningInterval);
+    let timeOut = setTimeout(clean, this.cleaningInterval);
   }
 }
 

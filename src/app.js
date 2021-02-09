@@ -5,7 +5,11 @@ const Store = require("./_store");
 
 const app = express();
 
-Store.initialize({ startCleaner: true, persistenceTimePeriod: 1 });
+Store.initialize({
+  startCleaner: true,
+  persistenceTimePeriod: 1,
+  persistenceFlushInterval: 10000,
+});
 
 app.use(cors());
 app.use(express.json());
