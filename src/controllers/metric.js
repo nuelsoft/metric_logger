@@ -35,7 +35,7 @@ const getSum = (request, response) => {
       error: "no logs have been made with this key in the last hour",
     });
 
-  return response.status(201).send(`${out.sum}`);
+  return response.status(200).send(`${out.sum}`);
 };
 
 module.exports = { getSum, logData };
