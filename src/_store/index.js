@@ -52,20 +52,10 @@ class Store {
   }
 
   /**
-   * @throws If Store isn't initialized
-   * @returns boolean
-   */
-  static ensureInitialized() {
-    if (this.bucket === null) throw "Store hasn't been initialized.";
-    return true;
-  }
-
-  /**
    * Clears the data in bucket. Clear can be targeted to a key or the whole bucket
    * @param {string} key key in bucket to clear. If not specified. the whole bucket is cleared
    */
   static clear(key) {
-    this.ensureInitialized();
     if (key) delete this.bucket[key];
     else this.bucket = {};
   }
@@ -79,7 +69,6 @@ class Store {
    * @returns {{value: number}}
    */
   static push(key, value) {
-    this.ensureInitialized();
     // Initializes key in bucket if already not.
     if (!this.bucket[key]) this.bucket[key] = [];
     this.bucket[key].push({ time: Date.now(), value });
@@ -98,7 +87,6 @@ class Store {
    * @returns null | {logs: {time: number, data: number}[], sum: number | undefined}
    */
   static fetch(key, { computeDataSum }) {
-    this.ensureInitialized();
     if (!this.bucket[key]) return null;
 
     let sum = 0;
@@ -135,8 +123,6 @@ class Store {
    * @private
    */
   static cleaner() {
-    this.ensureInitialized();
-
     console.log(
       "STORE: Bucket cleaner started, cleaning every",
       this.cleaningInterval,
